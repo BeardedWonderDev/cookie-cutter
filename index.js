@@ -20,7 +20,10 @@ var exports = (module.exports = function (doc) {
     if (opts.expires) s += "; expires=" + opts.expires;
     if (opts.path) s += "; path=" + escape(opts.path);
     if (opts.domain) s += "; domain=" + escape(opts.domain);
+    if (opts.MaxAge) s += "; Max-Age=" + escape(opts.MaxAge);
+    if (opts.SameSite) s += "; SameSite=" + escape(opts.SameSite);
     if (opts.secure) s += "; secure";
+    if (opts.HttpOnly) s += "; HttpOnly";
     doc.cookie = s;
     return s;
   };

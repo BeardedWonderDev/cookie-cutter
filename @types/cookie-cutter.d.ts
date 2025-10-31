@@ -3,6 +3,15 @@ interface CookieOptions {
   path?: string;
   domain?: string;
   secure?: boolean;
+  HttpOnly?: boolean;
+  MaxAge?: number;
+  SameSite?: SameSiteOptions;
+}
+
+declare enum SameSiteOptions {
+  Strict = "Strict",
+  Lax = "Lax",
+  None = "None",
 }
 
 interface Cookie {
@@ -16,9 +25,9 @@ declare module "@boiseitguru/cookie-cutter" {
   namespace cookie {
     export const get: (key: string) => string | undefined;
     export const set: (
-      key: string,
-      value: string,
-      options?: CookieOptions
+        key: string,
+        value: string,
+        options?: CookieOptions
     ) => string;
   }
 
