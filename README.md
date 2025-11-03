@@ -40,6 +40,39 @@ Set the cookie at `key` to `value` with optional parameters `expires` and `path`
 
 To unset a cookie, use a date in the past, ex: `{ expires: new Date(0) }`
 
+## cookie.clear(key, opts={})
+
+Clear the cookie at `key` by setting an expiry date in the past. Pass the same
+`opts` you used to set the cookie (like `path` or `domain`) so the browser
+targets the correct cookie.
+
+```javascript
+var cookie = require("@boiseitguru/cookie-cutter");
+cookie.clear("times", { path: "/" });
+```
+
+## examples
+
+### modern bundlers
+
+```javascript
+// vite / webpack / rollup
+import cookie from "@boiseitguru/cookie-cutter";
+
+const api = cookie();
+api.set("theme", "dark", { SameSite: "Lax" });
+```
+
+### typescript
+
+```typescript
+import cookie = require("@boiseitguru/cookie-cutter");
+
+const api = cookie(document);
+api.set("token", "xyz", { HttpOnly: true, MaxAge: 60 });
+api.clear("token", { path: "/" });
+```
+
 ## install
 
 With [npm](http://npmjs.org) do:
