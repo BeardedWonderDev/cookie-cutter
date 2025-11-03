@@ -7,7 +7,7 @@ test("sets and retrieves cookies", function (t) {
   var api = cookie(doc);
 
   var result = api.set("user", "abc", { path: "/" });
-  t.equal(result, "user=abc; path=%2F", "applies path option");
+  t.equal(result, "user=abc; path=/", "applies path option");
   t.equal(api.get("user"), "abc", "reads stored cookie");
 });
 
