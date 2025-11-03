@@ -17,6 +17,7 @@ declare enum SameSiteOptions {
 interface Cookie {
   get(key: string): string | undefined;
   set(key: string, value: string, options?: CookieOptions): string;
+  clear(key: string, options?: CookieOptions): string;
 }
 
 declare module "@boiseitguru/cookie-cutter" {
@@ -27,6 +28,10 @@ declare module "@boiseitguru/cookie-cutter" {
     export const set: (
         key: string,
         value: string,
+        options?: CookieOptions
+    ) => string;
+    export const clear: (
+        key: string,
         options?: CookieOptions
     ) => string;
   }
