@@ -6,6 +6,7 @@ interface CookieOptions {
   HttpOnly?: boolean;
   MaxAge?: number;
   SameSite?: SameSiteOptions;
+  partitioned?: boolean;
 }
 
 declare enum SameSiteOptions {
@@ -20,10 +21,15 @@ interface Cookie {
   clear(key: string, options?: CookieOptions): string;
 }
 
+interface CookieConfig {
+  suppressInsecureSameSiteNoneWarning?: boolean;
+}
+
 declare module "@boiseitguru/cookie-cutter" {
   function cookie(doc?: Document | string): Cookie;
 
   namespace cookie {
+    function configure(options: CookieConfig): void;
     export const get: (key: string) => string | undefined;
     export const set: (
         key: string,

@@ -73,7 +73,7 @@ Serializes `key=value` with any supplied cookie attributes, assigns it to `docum
 Clears the cookie for `key` by delegating to `set` with an expiry in the past and `Max-Age = 0`. Pass the same options you used when setting the cookie (such as `path` or `domain`) so the browser targets the correct cookie.
 
 ### `cookie.configure(options: CookieConfig): void`
-Adjusts global behavior for all future cookie operations.
+Adjusts global defaults for future cookie operations, such as silencing SameSite warnings during local development.
 
 ```typescript
 type CookieConfig = {

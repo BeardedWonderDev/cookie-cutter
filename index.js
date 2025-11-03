@@ -1,3 +1,15 @@
+var globalConfig = { suppressInsecureSameSiteNoneWarning: false };
+
+function shouldWarnInsecureSameSiteNone(opts) {
+  if (!opts) return false;
+  if (opts.SameSite !== "None") return false;
+  if (opts.secure) return false;
+  if (globalConfig.suppressInsecureSameSiteNoneWarning) return false;
+  if (typeof console === "undefined" || typeof console.warn !== "function") return false;
+  if (typeof process !== "undefined" && process.env && process.env.NODE_ENV === "production") return false;
+  return true;
+}
+
 var exports = (module.exports = function (doc) {
   if (!doc) doc = {};
   if (typeof doc === "string") doc = { cookie: doc };
@@ -23,7 +35,13 @@ var exports = (module.exports = function (doc) {
     if (opts.MaxAge !== undefined) s += "; Max-Age=" + escape(opts.MaxAge);
     if (opts.SameSite) s += "; SameSite=" + escape(opts.SameSite);
     if (opts.secure) s += "; secure";
+    if (opts.partitioned) s += "; Partitioned";
     if (opts.HttpOnly) s += "; HttpOnly";
+    if (shouldWarnInsecureSameSiteNone(opts)) {
+      console.warn(
+        "[cookie-cutter] SameSite=None cookies require secure=true; this will throw in v1.0.0"
+      );
+    }
     doc.cookie = s;
     return s;
   };
@@ -41,6 +59,13 @@ var exports = (module.exports = function (doc) {
   };
   return self;
 });
+
+exports.configure = function (options) {
+  if (!options) return;
+  if (options.suppressInsecureSameSiteNoneWarning === true) {
+    globalConfig.suppressInsecureSameSiteNoneWarning = true;
+  }
+};
 
 if (typeof document !== "undefined") {
   var cookie = exports(document);
