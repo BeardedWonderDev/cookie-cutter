@@ -27,6 +27,18 @@ var exports = (module.exports = function (doc) {
     doc.cookie = s;
     return s;
   };
+
+  self.clear = function (key, opts) {
+    var options = {};
+    if (opts) {
+      for (var prop in opts) {
+        if (opts.hasOwnProperty(prop)) options[prop] = opts[prop];
+      }
+    }
+    options.expires = new Date(0);
+    options.MaxAge = 0;
+    return self.set(key, "", options);
+  };
   return self;
 });
 
@@ -34,4 +46,5 @@ if (typeof document !== "undefined") {
   var cookie = exports(document);
   exports.get = cookie.get;
   exports.set = cookie.set;
+  exports.clear = cookie.clear;
 }
